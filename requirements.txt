@@ -4,6 +4,6 @@ pandas==1.2.4
 scikit-learn==0.24.2
 streamlit==0.85.0
 streamlit_option_menu
-click==7.0
+click==7.1.2
 
 
