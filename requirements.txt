@@ -5,7 +5,7 @@ scikit-learn==0.24.2
 streamlit==0.89.0
 streamlit_option_menu
 click>=7.0, <8.0
-!pip install altair==4.1.0
+altair==4.1.0
 
 
 
