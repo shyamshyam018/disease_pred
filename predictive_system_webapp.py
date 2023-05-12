@@ -9,6 +9,7 @@ Created on Fri Apr 28 20:35:42 2023
 import numpy as np
 import pickle
 import streamlit as st
+from PIL import Image
 
 
 # loading the saved model
@@ -17,12 +18,17 @@ loaded_model = pickle.load(open('trained_model.sav', 'rb'))
 
 # creating a function for Prediction
 
-def diabetes_prediction(input_data):
+def diabetes_prediction(image):
     
-
-    # changing the input_data to numpy array
-    input_data_as_numpy_array = np.asarray(input_data)
-
+    # preprocess the image
+    img = Image.open(image)
+    # convert to grayscale and resize
+    img = img.convert('L').resize((64, 64))
+    # convert to numpy array
+    input_data_as_numpy_array = np.asarray(img)
+    # flatten the array
+    input_data_as_numpy_array = input_data_as_numpy_array.flatten()
+    
     # reshape the array as we are predicting for one instance
     input_data_reshaped = input_data_as_numpy_array.reshape(1,-1)
 
@@ -44,32 +50,17 @@ def main():
     
     
     # getting the input data from the user
-    
-    
-    Pregnancies = st.text_input('Number of Pregnancies')
-    Glucose = st.text_input('Glucose Level')
-    BloodPressure = st.text_input('Blood Pressure value')
-    SkinThickness = st.text_input('Skin Thickness value')
-    Insulin = st.text_input('Insulin Level')
-    BMI = st.text_input('BMI value')
-    DiabetesPedigreeFunction = st.text_input('Diabetes Pedigree Function value')
-    Age = st.text_input('Age of the Person')
-    
+    uploaded_file = st.file_uploader("Choose an image...", type=["jpg","jpeg","png"])
     
     # code for Prediction
     diagnosis = ''
     
     # creating a button for Prediction
-    
-    if st.button('Diabetes Test Result'):
-        diagnosis = diabetes_prediction([Pregnancies, Glucose, BloodPressure, SkinThickness, Insulin, BMI, DiabetesPedigreeFunction, Age])
+    if uploaded_file is not None:
+        diagnosis = diabetes_prediction(uploaded_file)
         
         
     st.success(diagnosis)
-    
-    
-    
-    
     
 if __name__ == '__main__':
     main()
