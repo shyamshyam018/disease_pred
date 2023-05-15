@@ -16,11 +16,12 @@ parkinsons_model = pickle.load(open('parkinsons_model (1).sav', 'rb'))
 
  
 
-# define options for the dropdown menu
-options = ['Diabetes Prediction', 'Heart Disease Prediction', 'Parkinsons Prediction']
-
-# create a dropdown menu for navigation
-selected = st.selectbox('Select a Prediction System:', options)
+# create a slider for navigation
+selected = st.slider('Select a Prediction System:',
+                     options=['Diabetes Prediction',
+                              'Heart Disease Prediction',
+                              'Parkinsons Prediction'],
+                     value=0)
     
 # Diabetes Prediction Page
 if (selected == 'Diabetes Prediction'):
