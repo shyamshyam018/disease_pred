@@ -17,11 +17,10 @@ parkinsons_model = pickle.load(open('parkinsons_model (1).sav', 'rb'))
  
 
 # create a slider for navigation
-selected = st.slider('Select a Prediction System:',
-                     options=['Diabetes Prediction',
-                              'Heart Disease Prediction',
-                              'Parkinsons Prediction'],
-                     value=0)
+selected = st.select_slider('Select a Prediction System:',
+                            options=['Diabetes Prediction',
+                                     'Heart Disease Prediction',
+                                     'Parkinsons Prediction'])
     
 # Diabetes Prediction Page
 if (selected == 'Diabetes Prediction'):
