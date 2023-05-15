@@ -14,19 +14,13 @@ heart_disease_model = pickle.load(open('heart_disease_model.sav','rb'))
 
 parkinsons_model = pickle.load(open('parkinsons_model (1).sav', 'rb'))
 
+ 
 
+# define options for the dropdown menu
+options = ['Diabetes Prediction', 'Heart Disease Prediction', 'Parkinsons Prediction']
 
-# sidebar for navigation
-with st.sidebar:
-    
-    selected = option_menu('Multiple Disease Prediction System',
-                          
-                          ['Diabetes Prediction',
-                           'Heart Disease Prediction',
-                           'Parkinsons Prediction'],
-                          icons=['activity','heart','person'],
-                          default_index=0)
-    
+# create a dropdown menu for navigation
+selected = st.selectbox('Select a Prediction System:', options)
     
 # Diabetes Prediction Page
 if (selected == 'Diabetes Prediction'):
