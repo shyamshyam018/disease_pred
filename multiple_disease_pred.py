@@ -3,23 +3,29 @@
 import pickle
 import streamlit as st
 from streamlit_option_menu import option_menu
-import time
 
 
 # loading the saved models
 
-diabetes_model = pickle.load(open('trained_model.sav', 'rb'))
+diabetes_model = pickle.load(open('C:/Users/sss/OneDrive/Desktop/MACHINE LEARNING/MULTIPLE DISEASE PREDICTION SYSTEM/trained_model.sav', 'rb'))
 
-heart_disease_model = pickle.load(open('heart_disease_model.sav','rb'))
+heart_disease_model = pickle.load(open('C:/Users/sss/OneDrive/Desktop/MACHINE LEARNING/MULTIPLE DISEASE PREDICTION SYSTEM/heart_disease_model.sav','rb'))
 
-parkinsons_model = pickle.load(open('parkinsons_model (1).sav', 'rb'))
+parkinsons_model = pickle.load(open('C:/Users/sss/OneDrive/Desktop/MACHINE LEARNING/MULTIPLE DISEASE PREDICTION SYSTEM/parkinsons_model (1).sav', 'rb'))
 
- 
 
-selected = st.sidebar.selectbox('Select a Prediction System:',
-                                options=['Diabetes Prediction',
-                                         'Heart Disease Prediction',
-                                         'Parkinsons Prediction'])
+
+# sidebar for navigation
+with st.sidebar:
+    
+    selected = option_menu('Multiple Disease Prediction System',
+                          
+                          ['Diabetes Prediction',
+                           'Heart Disease Prediction',
+                           'Parkinsons Prediction'],
+                          icons=['activity','heart','person'],
+                          default_index=0)
+    
     
 # Diabetes Prediction Page
 if (selected == 'Diabetes Prediction'):
@@ -60,21 +66,16 @@ if (selected == 'Diabetes Prediction'):
     diab_diagnosis = ''
     
     # creating a button for Prediction
+    
     if st.button('Diabetes Test Result'):
-        progress_bar = st.progress(0)
-        with st.spinner('Predicting...'):
-            for i in range(100):
-                time.sleep(0.01)
-                progress_bar.progress(i + 1)
-            diab_prediction = diabetes_model.predict([[Pregnancies, Glucose, BloodPressure, SkinThickness, Insulin, BMI, DiabetesPedigreeFunction, Age]])
-            if (diab_prediction[0] == 1):
-                diab_diagnosis = 'The person is diabetic'
-            else:
-                diab_diagnosis = 'The person is not diabetic'
-    show_diagnosis = st.checkbox('Show Diagnosis')
-    if show_diagnosis:
-        st.success(diab_diagnosis)
-
+        diab_prediction = diabetes_model.predict([[Pregnancies, Glucose, BloodPressure, SkinThickness, Insulin, BMI, DiabetesPedigreeFunction, Age]])
+        
+        if (diab_prediction[0] == 1):
+          diab_diagnosis = 'The person is diabetic'
+        else:
+          diab_diagnosis = 'The person is not diabetic'
+        
+    st.success(diab_diagnosis)
 
 
 
