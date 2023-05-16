@@ -15,16 +15,18 @@ parkinsons_model = pickle.load(open('parkinsons_model (1).sav', 'rb'))
 
 
 
-# sidebar for navigation
 with st.sidebar:
-    
-    selected = option_menu('Multiple Disease Prediction System',
-                          
-                          ['Diabetes Prediction',
-                           'Heart Disease Prediction',
-                           'Parkinsons Prediction'],
-                          icons=['activity','heart','person'],
-                          default_index=0)
+    st.title("Multiple Disease Prediction System")
+    st.markdown("Welcome to the Disease Prediction System. Please click the button below to get started.")
+
+    if st.button("Get Started"):
+        st.empty()  # Remove the "Get Started" button when clicked
+        selected = option_menu(
+            "Select a Disease for Prediction",
+            ["Diabetes Prediction", "Heart Disease Prediction", "Parkinsons Prediction"],
+            icons=["activity", "heart", "person"],
+            default_index=0,
+        )
     
     
 # Diabetes Prediction Page
