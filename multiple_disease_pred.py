@@ -25,24 +25,7 @@ def main():
 def display_diabetes_prediction():
     st.title("Diabetes Prediction using ML")
     # Rest of the code for Diabetes Prediction page...
-
-
-def display_heart_disease_prediction():
-    st.title("Heart Disease Prediction using ML")
-    # Rest of the code for Heart Disease Prediction page...
-
-
-def display_parkinsons_prediction():
-    st.title("Parkinson's Disease Prediction using ML")
-    # Rest of the code for Parkinson's Prediction page...
-# Diabetes Prediction Page
-if (selected == 'Diabetes Prediction'):
-    
-    # page title
-    st.title('Diabetes Prediction using ML')
-    
-    
-    # getting the input data from the user
+     # getting the input data from the user
     col1, col2, col3 = st.columns(3)
     
     with col1:
@@ -87,13 +70,9 @@ if (selected == 'Diabetes Prediction'):
 
 
 
-
-# Heart Disease Prediction Page
-if (selected == 'Heart Disease Prediction'):
-    
-    # page title
-    st.title('Heart Disease Prediction using ML')
-    
+def display_heart_disease_prediction():
+    st.title("Heart Disease Prediction using ML")
+    # Rest of the code for Heart Disease Prediction page...
     col1, col2, col3 = st.columns(3)
     
     with col1:
@@ -153,15 +132,11 @@ if (selected == 'Heart Disease Prediction'):
         
     st.success(heart_diagnosis)
         
-    
-    
 
-# Parkinson's Prediction Page
-if (selected == "Parkinsons Prediction"):
-    
-    # page title
+
+def display_parkinsons_prediction():
     st.title("Parkinson's Disease Prediction using ML")
-    
+    # Rest of the code for Parkinson's Prediction page...
     col1, col2, col3, col4, col5 = st.columns(5)  
     
     with col1:
@@ -245,6 +220,8 @@ if (selected == "Parkinsons Prediction"):
           parkinsons_diagnosis = "The person does not have Parkinson's disease"
         
     st.success(parkinsons_diagnosis)
+
+
 
 
 
