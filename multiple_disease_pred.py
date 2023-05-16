@@ -1,31 +1,40 @@
+
+
+import pickle
 import streamlit as st
 from streamlit_option_menu import option_menu
 
 
-def main():
-    st.sidebar.title("Multiple Disease Prediction System")
-    st.sidebar.markdown("Select a disease for prediction:")
+# loading the saved models
 
-    selected = st.sidebar.radio(
-        "Select a Disease",
-        ["Diabetes Prediction", "Heart Disease Prediction", "Parkinsons Prediction"],
-        index=0,
-        format_func=lambda x: "Diabetes Prediction" if x == 0 else "Heart Disease Prediction" if x == 1 else "Parkinsons Prediction",
-    )
+diabetes_model = pickle.load(open('C:/Users/sss/OneDrive/Desktop/MACHINE LEARNING/MULTIPLE DISEASE PREDICTION SYSTEM/trained_model.sav', 'rb'))
 
-    if st.sidebar.button("Get Started"):
-        if selected == "Diabetes Prediction":
-            display_diabetes_prediction()
-        elif selected == "Heart Disease Prediction":
-            display_heart_disease_prediction()
-        elif selected == "Parkinsons Prediction":
-            display_parkinsons_prediction()
+heart_disease_model = pickle.load(open('C:/Users/sss/OneDrive/Desktop/MACHINE LEARNING/MULTIPLE DISEASE PREDICTION SYSTEM/heart_disease_model.sav','rb'))
+
+parkinsons_model = pickle.load(open('C:/Users/sss/OneDrive/Desktop/MACHINE LEARNING/MULTIPLE DISEASE PREDICTION SYSTEM/parkinsons_model (1).sav', 'rb'))
 
 
-def display_diabetes_prediction():
-    st.title("Diabetes Prediction using ML")
-    # Rest of the code for Diabetes Prediction page...
-     # getting the input data from the user
+
+# sidebar for navigation
+with st.sidebar:
+    
+    selected = option_menu('Multiple Disease Prediction System',
+                          
+                          ['Diabetes Prediction',
+                           'Heart Disease Prediction',
+                           'Parkinsons Prediction'],
+                          icons=['activity','heart','person'],
+                          default_index=0)
+    
+    
+# Diabetes Prediction Page
+if (selected == 'Diabetes Prediction'):
+    
+    # page title
+    st.title('Diabetes Prediction using ML')
+    
+    
+    # getting the input data from the user
     col1, col2, col3 = st.columns(3)
     
     with col1:
@@ -70,9 +79,13 @@ def display_diabetes_prediction():
 
 
 
-def display_heart_disease_prediction():
-    st.title("Heart Disease Prediction using ML")
-    # Rest of the code for Heart Disease Prediction page...
+
+# Heart Disease Prediction Page
+if (selected == 'Heart Disease Prediction'):
+    
+    # page title
+    st.title('Heart Disease Prediction using ML')
+    
     col1, col2, col3 = st.columns(3)
     
     with col1:
@@ -132,11 +145,15 @@ def display_heart_disease_prediction():
         
     st.success(heart_diagnosis)
         
+    
+    
 
-
-def display_parkinsons_prediction():
+# Parkinson's Prediction Page
+if (selected == "Parkinsons Prediction"):
+    
+    # page title
     st.title("Parkinson's Disease Prediction using ML")
-    # Rest of the code for Parkinson's Prediction page...
+    
     col1, col2, col3, col4, col5 = st.columns(5)  
     
     with col1:
@@ -222,8 +239,3 @@ def display_parkinsons_prediction():
     st.success(parkinsons_diagnosis)
 
 
-
-
-
-if __name__ == "__main__":
-    main()
