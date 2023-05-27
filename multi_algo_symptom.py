@@ -1,136 +1,70 @@
 import streamlit as st
-import pandas as pd
-import numpy as np
-from sklearn import tree, ensemble, neighbors, naive_bayes
+import pickle
 
-# Define the list of symptoms
-symptoms = ['back_pain', 'constipation', 'abdominal_pain', 'diarrhoea', 'mild_fever', 'yellow_urine',
-            'yellowing_of_eyes', 'acute_liver_failure', 'fluid_overload', 'swelling_of_stomach',
-            'swelled_lymph_nodes', 'malaise', 'blurred_and_distorted_vision', 'phlegm', 'throat_irritation',
-            'redness_of_eyes', 'sinus_pressure', 'runny_nose', 'congestion', 'chest_pain', 'weakness_in_limbs',
-            'fast_heart_rate', 'pain_during_bowel_movements', 'pain_in_anal_region', 'bloody_stool',
-            'irritation_in_anus', 'neck_pain', 'dizziness', 'cramps', 'bruising', 'obesity', 'swollen_legs',
-            'swollen_blood_vessels', 'puffy_face_and_eyes', 'enlarged_thyroid', 'brittle_nails',
-            'swollen_extremeties', 'excessive_hunger', 'extra_marital_contacts', 'drying_and_tingling_lips',
-            'slurred_speech', 'knee_pain', 'hip_joint_pain', 'muscle_weakness', 'stiff_neck', 'swelling_joints',
-            'movement_stiffness', 'spinning_movements', 'loss_of_balance', 'unsteadiness',
-            'weakness_of_one_body_side', 'loss_of_smell', 'bladder_discomfort', 'foul_smell_of urine',
-            'continuous_feel_of_urine', 'passage_of_gases', 'internal_itching', 'toxic_look_(typhos)',
-            'depression', 'irritability', 'muscle_pain', 'altered_sensorium', 'red_spots_over_body', 'belly_pain',
-            'abnormal_menstruation', 'dischromic _patches', 'watering_from_eyes', 'increased_appetite', 'polyuria',
-            'family_history', 'mucoid_sputum', 'rusty_sputum', 'lack_of_concentration', 'visual_disturbances',
-            'receiving_blood_transfusion', 'receiving_unsterile_injections', 'coma', 'stomach_bleeding',
-            'distention_of_abdomen', 'history_of_alcohol_consumption', 'fluid_overload', 'blood_in_sputum',
-            'prominent_veins_on_calf', 'palpitations', 'painful_walking', 'pus_filled_pimples', 'blackheads',
-            'scurring', 'skin_peeling', 'silver_like_dusting', 'small_dents_in_nails', 'inflammatory_nails',
-            'blister', 'red_sore_around_nose', 'yellow_crust_ooze']
+# Load the Decision Tree model
+with open('decision_tree_model.pkl', 'rb') as file:
+    decision_tree_model = pickle.load(file)
 
-diseases = ['Fungal infection', 'Allergy', 'GERD', 'Chronic cholestasis',
-            'Drug Reaction', 'Peptic ulcer diseae', 'AIDS', 'Diabetes ',
-            'Gastroenteritis', 'Bronchial Asthma', 'Hypertension ', 'Migraine',
-            'Cervical spondylosis', 'Paralysis (brain hemorrhage)', 'Jaundice',
-            'Malaria', 'Chicken pox', 'Dengue', 'Typhoid', 'hepatitis A',
-            'Hepatitis B', 'Hepatitis C', 'Hepatitis D', 'Hepatitis E',
-            'Alcoholic hepatitis', 'Tuberculosis', 'Common Cold', 'Pneumonia',
-            'Dimorphic hemmorhoids(piles)', 'Heart attack', 'Varicose veins',
-            'Hypothyroidism', 'Hyperthyroidism', 'Hypoglycemia',
-            'Osteoarthristis', 'Arthritis',
-            '(vertigo) Paroymsal  Positional Vertigo', 'Acne',
-            'Urinary tract infection', 'Psoriasis', 'Impetigo']
+# Load the Random Forest model
+with open('random_forest_model.pkl', 'rb') as file:
+    random_forest_model = pickle.load(file)
 
-# Read the training and testing datasets
-df_train = pd.read_csv("training.csv")
-df_test = pd.read_csv("testing.csv")
+# Load the k-Nearest Neighbors model
+with open('knn_model.pkl', 'rb') as file:
+    knn_model = pickle.load(file)
 
-# Extract the features and target variable from the datasets
-X_train = df_train[symptoms]
-y_train = df_train["prognosis"]
+# Load the Naive Bayes model
+with open('naive_bayes_model.pkl', 'rb') as file:
+    naive_bayes_model = pickle.load(file)
 
-X_test = df_test[symptoms]
-y_test = df_test["prognosis"]
+# Set the page title
+st.title("Disease Prediction System")
 
-# Train the models
-clf1 = tree.DecisionTreeClassifier()
-clf1.fit(X_train, y_train)
+# Function to predict disease using the four models
+def predict_disease(symptoms):
+    # Prepare the input data
+    l2 = [0] * len(l1)
+    for k in range(len(l1)):
+        for z in symptoms:
+            if z == l1[k]:
+                l2[k] = 1
 
-clf2 = ensemble.RandomForestClassifier(n_estimators=100)
-clf2.fit(X_train, y_train)
+    inputtest = [l2]
 
-clf3 = neighbors.KNeighborsClassifier()
-clf3.fit(X_train, y_train)
+    # Use the Decision Tree model for prediction
+    decision_tree_prediction = decision_tree_model.predict(inputtest)
 
-clf4 = naive_bayes.GaussianNB()
-clf4.fit(X_train, y_train)
+    # Use the Random Forest model for prediction
+    random_forest_prediction = random_forest_model.predict(inputtest)
 
+    # Use the k-Nearest Neighbors model for prediction
+    knn_prediction = knn_model.predict(inputtest)
 
-# Define the prediction functions for each model
-def decision_tree_prediction(symptoms):
-    input_test = [symptoms]
-    return clf1.predict(input_test)[0]
+    # Use the Naive Bayes model for prediction
+    naive_bayes_prediction = naive_bayes_model.predict(inputtest)
 
+    # Display the predictions
+    st.subheader("Prediction Results:")
+    st.write("Decision Tree Prediction:", decision_tree_prediction[0])
+    st.write("Random Forest Prediction:", random_forest_prediction[0])
+    st.write("k-Nearest Neighbors Prediction:", knn_prediction[0])
+    st.write("Naive Bayes Prediction:", naive_bayes_prediction[0])
 
-def random_forest_prediction(symptoms):
-    input_test = [symptoms]
-    return clf2.predict(input_test)[0]
+# Create input fields for symptoms
+st.subheader("Enter Symptoms:")
+symptom1 = st.text_input("Symptom 1")
+symptom2 = st.text_input("Symptom 2")
+symptom3 = st.text_input("Symptom 3")
+symptom4 = st.text_input("Symptom 4")
+symptom5 = st.text_input("Symptom 5")
 
+symptoms = [symptom1, symptom2, symptom3, symptom4, symptom5]
 
-def knn_prediction(symptoms):
-    input_test = [symptoms]
-    return clf3.predict(input_test)[0]
+# Check if all symptoms are entered
+if all(symptoms):
+    # Predict disease when the "Predict" button is clicked
+    if st.button("Predict"):
+        predict_disease(symptoms)
+else:
+    st.warning("Please enter all symptoms.")
 
-
-def naive_bayes_prediction(symptoms):
-    input_test = [symptoms]
-    return clf4.predict(input_test)[0]
-
-
-# Define the Streamlit app
-def main():
-    st.title("Medical Diagnosis App")
-    st.sidebar.title("Symptoms")
-
-    # Collect user inputs for symptoms
-    selected_symptoms = []
-    for i in range(5):
-        symptom = st.sidebar.selectbox(f"Symptom {i+1}", options=symptoms)
-        selected_symptoms.append(symptom)
-
-    # Display the selected symptoms
-    st.sidebar.markdown("### Selected Symptoms")
-    for symptom in selected_symptoms:
-        st.sidebar.write(symptom)
-
-    # Run the models and display the predictions
-    st.markdown("### Prediction Results")
-
-    with st.expander("Decision Tree"):
-        if len(selected_symptoms) >= 2:
-            prediction = decision_tree_prediction(selected_symptoms)
-            st.write("Prediction:", diseases[prediction])
-        else:
-            st.write("Kindly select at least two symptoms.")
-
-    with st.expander("Random Forest"):
-        if len(selected_symptoms) >= 2:
-            prediction = random_forest_prediction(selected_symptoms)
-            st.write("Prediction:", diseases[prediction])
-        else:
-            st.write("Kindly select at least two symptoms.")
-
-    with st.expander("K-Nearest Neighbors"):
-        if len(selected_symptoms) >= 2:
-            prediction = knn_prediction(selected_symptoms)
-            st.write("Prediction:", diseases[prediction])
-        else:
-            st.write("Kindly select at least two symptoms.")
-
-    with st.expander("Naive Bayes"):
-        if len(selected_symptoms) >= 2:
-            prediction = naive_bayes_prediction(selected_symptoms)
-            st.write("Prediction:", diseases[prediction])
-        else:
-            st.write("Kindly select at least two symptoms.")
-
-
-if __name__ == "__main__":
-    main()
