@@ -3,19 +3,19 @@ import pickle
 
 # Load the Decision Tree model
 with open('decision_tree_model.pkl', 'rb') as file:
-    decision_tree_model = pickle.load('decision_tree_model.pkl')
+    decision_tree_model = pickle.load(file)
 
 # Load the Random Forest model
 with open('random_forest_model.pkl', 'rb') as file:
-    random_forest_model = pickle.load('random_forest_model.pkl')
+    random_forest_model = pickle.load(file)
 
 # Load the KNN model
 with open('knn_model.pkl', 'rb') as file:
-    knn_model = pickle.load('knn_model.pkl')
+    knn_model = pickle.load(file)
 
 # Load the Naive Bayes model
 with open('naive_bayes_model.pkl', 'rb') as file:
-    naive_bayes_model = pickle.load('naive_bayes_model.pkl')
+    naive_bayes_model = pickle.load(file)
 
 # Set the page title
 st.title("Disease Prediction System")
