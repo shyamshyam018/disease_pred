@@ -1,5 +1,6 @@
 import streamlit as st
 import pandas as pd
+import numpy as np
 from sklearn import tree, ensemble, neighbors, naive_bayes
 from sklearn.metrics import classification_report, confusion_matrix, accuracy_score
 
