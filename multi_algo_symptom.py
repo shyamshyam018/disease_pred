@@ -43,13 +43,7 @@ diseases = ['Fungal infection', 'Allergy', 'GERD', 'Chronic cholestasis',
 df_train = pd.read_csv("training.csv")
 df_test = pd.read_csv("testing.csv")
 
-# Check for missing values in X_train and X_test
-print(X_train.isna().sum())
-print(X_test.isna().sum())
 
-# Check for infinite values in X_train and X_test
-print(np.isfinite(X_train).sum())
-print(np.isfinite(X_test).sum())
 
 
 # Extract the features and target variable from the datasets
@@ -58,6 +52,14 @@ y_train = df_train["prognosis"]
 
 X_test = df_test[symptoms]
 y_test = df_test["prognosis"]
+
+# Check for missing values in X_train and X_test
+print(X_train.isna().sum())
+print(X_test.isna().sum())
+
+# Check for infinite values in X_train and X_test
+print(np.isfinite(X_train).sum())
+print(np.isfinite(X_test).sum())
 
 # Train the models
 clf1 = tree.DecisionTreeClassifier()
