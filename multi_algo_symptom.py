@@ -65,19 +65,19 @@ clf4.fit(X_train, y_train)
 
 # Define the prediction functions for each model
 def decision_tree_prediction(symptoms):
-    input_test = pd.DataFrame([symptoms], columns=symptoms)
+    input_test = [symptoms]
     return clf1.predict(input_test)[0]
 
 def random_forest_prediction(symptoms):
-    input_test = pd.DataFrame([symptoms], columns=symptoms)
+    input_test = [symptoms]
     return clf2.predict(input_test)[0]
 
 def knn_prediction(symptoms):
-    input_test = pd.DataFrame([symptoms], columns=symptoms)
+    input_test = [symptoms]
     return clf3.predict(input_test)[0]
 
 def naive_bayes_prediction(symptoms):
-    input_test = pd.DataFrame([symptoms], columns=symptoms)
+    input_test = [symptoms]
     return clf4.predict(input_test)[0]
 
 # Define the Streamlit app
@@ -86,43 +86,43 @@ def main():
     st.sidebar.title("Symptoms")
 
     # Collect user inputs for symptoms
-    user_symptoms = []
+    symptoms = []
     for i in range(5):
         symptom = st.sidebar.selectbox(f"Symptom {i+1}", options=symptoms, index=0)
-        user_symptoms.append(symptom)
+        symptoms.append(symptom)
 
     # Display the selected symptoms
     st.sidebar.markdown("### Selected Symptoms")
-    for symptom in user_symptoms:
+    for symptom in symptoms:
         st.sidebar.write(symptom)
 
     # Run the models and display the predictions
     st.markdown("### Prediction Results")
 
-    with st.beta_expander("Decision Tree"):
-        if len(user_symptoms) >= 2:
-            prediction = decision_tree_prediction(user_symptoms)
+    with st.expander("Decision Tree"):
+        if len(symptoms) >= 2:
+            prediction = decision_tree_prediction(symptoms)
             st.write("Prediction:", diseases[prediction])
         else:
             st.write("Kindly select at least two symptoms.")
 
-    with st.beta_expander("Random Forest"):
-        if len(user_symptoms) >= 2:
-            prediction = random_forest_prediction(user_symptoms)
+    with st.expander("Random Forest"):
+        if len(symptoms) >= 2:
+            prediction = random_forest_prediction(symptoms)
             st.write("Prediction:", diseases[prediction])
         else:
             st.write("Kindly select at least two symptoms.")
 
-    with st.beta_expander("K-Nearest Neighbors"):
-        if len(user_symptoms) >= 2:
-            prediction = knn_prediction(user_symptoms)
+    with st.expander("K-Nearest Neighbors"):
+        if len(symptoms) >= 2:
+            prediction = knn_prediction(symptoms)
             st.write("Prediction:", diseases[prediction])
         else:
             st.write("Kindly select at least two symptoms.")
 
-    with st.beta_expander("Naive Bayes"):
-        if len(user_symptoms) >= 2:
-            prediction = naive_bayes_prediction(user_symptoms)
+    with st.expander("Naive Bayes"):
+        if len(symptoms) >= 2:
+            prediction = naive_bayes_prediction(symptoms)
             st.write("Prediction:", diseases[prediction])
         else:
             st.write("Kindly select at least two symptoms.")
